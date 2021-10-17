@@ -23,13 +23,14 @@ const MONGO_URI = config.dbkey
 
 const mongoose = require( 'mongoose' )
 
+
 //  에러방지 옵션설정
-mongoose.connect(MONGO_URI, {
-} ) .then(() => console.log( "MongoDB Connected success !!" ))
-    .catch(err => console.log( err ))
-	
 
 const { User } = require("./models/User")
+mongoose.connect(MONGO_URI,  {
+	} ) .then(() => console.log( "MongoDB Connected success !!" ))
+	.catch(err => console.log( err.stack ))
+
 
 client.once('ready', () => {
 	console.log('Ready!');
@@ -40,8 +41,8 @@ client.on('interactionCreate', async interaction => {
 
 	const user_id = interaction.id
 
-	User.find({ 'id': user_id}, function(err, user) {
-		console.log(user)
+	await User.find({ 'id': user_id}, function(err, user) {
+		console.log(user.id)
 		if (!user) {
 			const newUser = new User({
 			id: interaction.user.id,

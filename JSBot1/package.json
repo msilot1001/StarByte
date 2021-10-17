@@ -87,7 +87,7 @@
     "minimist": "^1.2.5",
     "mongodb": "^4.1.2",
     "mongodb-connection-string-url": "^2.1.0",
-    "mongoose": "^6.0.11",
+    "mongoose": "5.0",
     "mpath": "^0.8.4",
     "mquery": "^4.0.0",
     "ms": "^2.1.3",
