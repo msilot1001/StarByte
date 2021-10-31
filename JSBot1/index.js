@@ -64,7 +64,7 @@ client.on('interactionCreate', async interaction => {
 		await command.execute(client, interaction, userinfo);
 	} catch (error) {
 		console.error(error);
-		return interaction.reply({ content: 'Retry few seconds later please.', ephemeral: true });
+		return interaction.reply({ content: 'Please retry few seconds later.', ephemeral: true });
 	}
 });
 
