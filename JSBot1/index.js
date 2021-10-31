@@ -60,10 +60,11 @@ client.on('interactionCreate', async interaction => {
 
 
 	try {
+		console.log(`${interaction.user.username}#${interaction.user.discriminator} Requested Command \"${interaction.commandName}\"`)
 		await command.execute(client, interaction, userinfo);
 	} catch (error) {
 		console.error(error);
-		return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		return interaction.reply({ content: 'Retry few seconds later please.', ephemeral: true });
 	}
 });
 

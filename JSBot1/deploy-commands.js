@@ -7,7 +7,7 @@ const { clientId, guildId, token } = require('./config.json');
 
 const commands = [
 	new SlashCommandBuilder().setName('ping').setDescription('Replies Ping!'),
-	new SlashCommandBuilder().setName('agree').setDescription('Agrees with the terms of service.'),
+	new SlashCommandBuilder().setName('work').setDescription('Work to earn money!'),
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '9' }).setToken(token);

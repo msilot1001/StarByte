@@ -12,7 +12,7 @@ module.exports = {
         .setAuthor('StarByte', 'https://media.discordapp.net/attachments/786810256709255179/898209754533474324/StarByte.png?width=676&height=676')
         .setDescription(`Ping : ${client.ws.ping}ms`)
         .addFields(
-            { name: 'Requested by', value: `${userinfo.username}, ${userinfo.id}` }
+            { name: 'Requested by', value: `${interaction.user.username}, ${interaction.user.id}` }
         )
         .setTimestamp()
         .setFooter('StarByte', 'https://media.discordapp.net/attachments/786810256709255179/898209754533474324/StarByte.png?width=676&height=676');
