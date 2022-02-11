@@ -17,27 +17,25 @@ module.exports = {
 				
 				//쿨다운
 
-				if(interaction.commandName == 'work') {
-					//var
-					
-					//cooldown
-					let workcooldown = 1000;
-					let lastwork = await db.fetch(`work_${interaction.user.id}`);
-					console.log(lastwork);
-					
-					lastwork = Number(lastwork);
-					
-					if ( lastwork != null && (workcooldown - (Date.now() - lastwork)) > 0) {
-						//cooldown left
-						const lefttime = Math.floor((workcooldown - (Date.now() - lastwork)) / 1000)
-						return interaction.reply({content:`Please try ${lefttime} seconds later.`, ephemeral : true })
-					}
-					else{
-						//update and pass
-						await db.set(`workbefore_${interaction.user.id}`, lastwork);
-						await db.set(`work_${interaction.user.id}`, Date.now());
-					}
-				}
+                
+                //cooldown
+                let workcooldown = 1000;
+                let lastwork = await db.fetch(`work_${interaction.user.id}`);
+                console.log(lastwork);
+                
+                lastwork = Number(lastwork);
+                
+                if ( lastwork != null && (workcooldown - (Date.now() - lastwork)) > 0) {
+                    //cooldown left
+                    const lefttime = Math.floor((workcooldown - (Date.now() - lastwork)) / 1000)
+                    return interaction.reply({content:`Please try ${lefttime} seconds later.`, ephemeral : true })
+                }
+                else{
+                    //update and pass
+                    await db.set(`workbefore_${interaction.user.id}`, lastwork);
+                    await db.set(`work_${interaction.user.id}`, Date.now());
+                }
+				
 	
 				//nullchect
 				if (!user.wallet) { return interaction.reply({content:`Please try ${lefttime} seconds later.`, ephemeral : true }); }
@@ -74,12 +72,24 @@ module.exports = {
 					bitcoins: 0,
 					agreed: 0
 				});
-				await newUser.save((err, doc) => {
+				newUser.save((err, doc) => {
 					if (err) console.log(`Failed to save user ${interaction.user.id}!`, err)
 					console.log(`new user ${interaction.user.id} saved`);
+					newUser.save((err, doc) => {
+						if (err) console.log(`Failed to save user ${interaction.user.id}!`, err)
+						console.log(`new user ${interaction.user.id} saved`);
+						const Embed = new MessageEmbed()
+						.setColor('#CB7ACF')
+						.setTitle('Failed to Save New User')
+						.setAuthor('StarByte', 'https://media.discordapp.net/attachments/786810256709255179/898209754533474324/StarByte.png?width=676&height=676')
+						.setDescription(`Please try again'`)
+						.setTimestamp()
+						.setFooter('StarByte', 'https://media.discordapp.net/attachments/786810256709255179/898209754533474324/StarByte.png?width=676&height=676');
+						interaction.reply({ embeds : [Embed]});
+					});
 				});
 			}
-		}).clone().catch(function(err){ console.log(err)})
+		}).catch(function(err){ console.log(err)})
 
 		
 	},

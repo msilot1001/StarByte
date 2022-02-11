@@ -1,25 +1,29 @@
-const { User } = require("./User.js")
-var db = require('quick.db')
-const { Client, Collection, Intents } = require('discord.js');
-const fs = require('fs');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+let { User } = require("./User.js")
+let db = require('quick.db')
+let { Client, Collection, Intents } = require('discord.js');
+let fs = require('fs');
+let client = new Client({ intents: [Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES ] });
 client.commands = new Collection();
 
 let rawdata = fs.readFileSync('config.json');
 let config = JSON.parse(rawdata);
 
-const token = config.token
-const dbkey = config.dbkey;
+let token = config.token
+let dbkey = config.dbkey;
 
 client.commands = new Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+let commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
+    console.log(command.data.name);
 	client.commands.set(command.data.name, command);
 }
 
-const mongoose = require("mongoose");
+console.log()
+
+let mongoose = require("mongoose");
 
 function DBConnect() {
 	const connect = mongoose.connect(dbkey, {  
@@ -45,7 +49,7 @@ client.on('interactionCreate', async interaction => {
 		const command = client.commands.get(interaction.commandName);
 
 		//커맨드 아니면 리턴
-		if (!command) return;
+		if (!command) {console.log(`/${interaction.commandName} requested by ${interaction.user.username} is not a valid command.`); return;}
 
 		//디버깅
 		console.log(`${interaction.user.username}#${interaction.user.discriminator} Requested Command \"${interaction.commandName}\"`)
@@ -64,7 +68,6 @@ client.on('interactionCreate', async interaction => {
 			await db.set(`work_${interaction.user.id}`, lastwork)
 		}
 		return interaction.reply({ content: 'Error occured. Please try after.', ephemeral: true });
-	}
-});
-//로그인
-client.login(token)
+	}})
+
+client.login(token);

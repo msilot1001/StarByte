@@ -42,6 +42,14 @@ module.exports = {
 				await newUser.save((err, doc) => {
 					if (err) console.log(`Failed to save user ${interaction.user.id}!`, err)
 					console.log(`new user ${interaction.user.id} saved`);
+					const Embed = new MessageEmbed()
+					.setColor('#CB7ACF')
+					.setTitle('Saved New User')
+					.setAuthor('StarByte', 'https://media.discordapp.net/attachments/786810256709255179/898209754533474324/StarByte.png?width=676&height=676')
+					.setDescription(`Please try again'`)
+					.setTimestamp()
+					.setFooter('StarByte', 'https://media.discordapp.net/attachments/786810256709255179/898209754533474324/StarByte.png?width=676&height=676');
+					interaction.reply({ embeds : [Embed]});
 				});
 			}
 		}).clone().catch(function(err){ console.log(err)})
