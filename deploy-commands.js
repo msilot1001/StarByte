@@ -26,6 +26,9 @@ const commands = [
     // * warnstatus
     new SlashCommandBuilder().setName('warnstatus').setDescription('Display Warning of User')
     .addUserOption(option=>option.setName('target').setDescription('User').setRequired(true)),
+    // * warnreset
+    new SlashCommandBuilder().setName('warnreset').setDescription('Reset Warning of User')
+    .addUserOption(option=>option.setName('target').setDescription('User').setRequired(true)),
     // * function
 	new SlashCommandBuilder().setName('function').setDescription('Add Function to your server')
     .addSubcommand(subcommand =>
